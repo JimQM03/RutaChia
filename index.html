@@ -1159,6 +1159,13 @@
                             <span class="info-cell-value" id="bus-eta-val" style="color: var(--accent-cyan);">Llega en 3 min</span>
                         </div>
                     </div>
+                    <div style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border-soft); font-size: 0.78rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
+                        <svg class="svg-icon" width="14" height="14" viewBox="0 0 24 24" stroke="var(--accent-cyan)">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span>Horario Operativo: <strong id="bus-schedule-info" style="color: var(--text-title);">Cargando...</strong></span>
+                    </div>
                 </div>
             </div>
 
@@ -1337,6 +1344,7 @@
                 code: "R1-URB",
                 busCode: "Bus #CH-104",
                 desc: "Conecta el Parque Principal con la zona comercial y universitaria por Av. Pradilla.",
+                hours: "5:00 AM - 10:00 PM (Cada 8-12 min)",
                 stopIds: [16, 1, 15, 2, 17, 3, 28, 4, 18, 5]
             },
             {
@@ -1345,6 +1353,7 @@
                 code: "R2-EXP",
                 busCode: "Bus #CH-208",
                 desc: "Ruta rápida hacia Portal Norte pasando por La Caro y Yerbabuena.",
+                hours: "5:15 AM - 10:30 PM (Cada 10-15 min)",
                 stopIds: [16, 1, 17, 3, 5, 18, 19, 20, 14]
             },
             {
@@ -1353,6 +1362,7 @@
                 code: "R3-VER",
                 busCode: "Bus #CH-312",
                 desc: "Recorrido veredal hacia los cerros occidentales y el anillo de Cají.",
+                hours: "5:30 AM - 9:00 PM (Cada 15-20 min)",
                 stopIds: [22, 7, 15, 16, 1, 6, 23]
             },
             {
@@ -1361,6 +1371,7 @@
                 code: "R4-VAR",
                 busCode: "Bus #CH-405",
                 desc: "Cobertura del corredor vial sur y acceso al sector veredal de Bojacá.",
+                hours: "5:00 AM - 9:30 PM (Cada 10-15 min)",
                 stopIds: [16, 1, 8, 25, 24, 9, 28, 3, 4]
             },
             {
@@ -1369,6 +1380,7 @@
                 code: "R5-VER",
                 busCode: "Bus #CH-519",
                 desc: "Conecta las veredas del norte de Chía con centros educativos e históricos.",
+                hours: "5:30 AM - 8:30 PM (Cada 20 min)",
                 stopIds: [10, 11, 21, 27, 15, 16]
             },
             {
@@ -1377,6 +1389,7 @@
                 code: "R6-SUR",
                 busCode: "Bus #CH-602",
                 desc: "Ruta sur que comunica barrios residenciales con la sede del SENA Chía.",
+                hours: "5:20 AM - 9:00 PM (Cada 15 min)",
                 stopIds: [25, 16, 26, 12, 13]
             }
         ];
@@ -1405,6 +1418,7 @@
         const searchInput = document.getElementById('directory-search');
         const stopsCountEl = document.getElementById('stops-count');
         const routesOverviewContainer = document.getElementById('routes-overview-container');
+        const busScheduleInfo = document.getElementById('bus-schedule-info');
         
         const mapSvgPath = document.getElementById('svg-route-path');
         const mapStopsGroup = document.getElementById('map-stops-group');
@@ -1492,6 +1506,7 @@
 
             activeRouteLabel.innerText = routeObj.name;
             activeBusCode.innerText = routeObj.busCode;
+            if (busScheduleInfo) busScheduleInfo.innerText = routeObj.hours;
             routeSelector.value = routeId;
 
             const routeStops = routeObj.stopIds.map(id => PARADEROS_CHIA.find(p => p.id === id)).filter(Boolean);
@@ -1561,9 +1576,10 @@
                         <span class="route-badge">${r.code}</span>
                     </div>
                     <p class="route-card-desc">${r.desc}</p>
-                    <span style="font-size: 0.72rem; font-weight: 700; color: var(--accent-cyan);">
-                        📍 ${r.stopIds.length} paraderos clave
-                    </span>
+                    <div style="font-size: 0.72rem; font-weight: 700; color: var(--accent-cyan); display: flex; flex-direction: column; gap: 2px;">
+                        <span>📍 ${r.stopIds.length} paraderos clave</span>
+                        <span style="color: var(--text-muted);">🕒 Horario: ${r.hours}</span>
+                    </div>
                 `;
 
                 item.onclick = () => {
