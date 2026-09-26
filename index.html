@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RutaChía - Tu Transporte Fácil en Chía</title>
+    <style>
+        /* ==========================================================================
+           1. SISTEMA DE DISEÑO VISUAL Y VARIABLES (MÓVIL & TABLET OPTIMIZADO)
+           ========================================================================== */
+        :root {
+            --bg-body: #f3f7f5;
+            --bg-card: #ffffff;
+            --bg-subtle: #eef5f1;
+            
+            --chia-green-main: #237a57;
+            --chia-green-dark: #124d35;
+            --chia-green-light: #e2f2eb;
+            --chia-mint: #22c55e;
+            
+            --text-title: #0f2e21;
+            --text-body: #2d4036;
+            --text-muted: #64748b;
+            --border-soft: #d2e3da;
+
+            /* Acentos Neón Exclusivos para Botones y Activos */
+            --neon-green: #10b981;
+            --neon-green-glow: rgba(16, 185, 129, 0.35);
+            --neon-blue: #0284c7;
+            --neon-blue-glow: rgba(2, 132, 199, 0.3);
+            --neon-orange: #f59e0b;
+            --neon-orange-glow: rgba(245, 158, 11, 0.35);
+            --neon-red: #ef4444;
+
+            --radius-card: 16px;
+            --radius-btn: 12px;
+            --shadow-card: 0 8px 30px rgba(35, 122, 87, 0.06);
+            --shadow-hover: 0 12px 35px rgba(35, 122, 87, 0.12);
+            --bottom-nav-height: 68px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-body);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* HEADER / NAVBAR RESPONSIVO */
+        header {
+            background: var(--bg-card);
+            border-bottom: 2px solid var(--border-soft);
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            width: 100%;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--chia-green-light);
+            border-radius: var(--radius-btn);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--chia-green-main);
+            flex-shrink: 0;
+        }
+
+        .brand-title h1 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--chia-green-dark);
+            line-height: 1.1;
+        }
+
+        .brand-title p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .live-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--chia-green-light);
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--chia-green-dark);
+            border: 1px solid var(--border-soft);
+            white-space: nowrap;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--neon-green);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--neon-green);
+            animation: pulseGlow 1.6s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1.2); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        /* */
+        /* LAYOUT ADAPTABLE Y CONTENEDOR PRINCIPAL */
+        main {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+            flex: 1;
+        }
+
+        .col-main, .col-side {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        /* TARJETAS CONTENEDORAS FLUIDAS */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-card);
+            border: 1px solid var(--border-soft);
+            padding: 1rem;
+            box-shadow: var(--shadow-card);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            width: 100%;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--bg-subtle);
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--text-title);
+        }
+
+        .card-subtitle {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* BOTONES DE ACCIÓN */
+        .btn-neon {
+            background: var(--chia-green-main);
+            color: #ffffff;
+            border: none;
+            padding: 10px 18px;
+            min-height: 44px;
+            border-radius: var(--radius-btn);
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px var(--neon-green-glow);
+            touch-action: manipulation;
+        }
+
+        .btn-neon:active {
+            transform: scale(0.97);
+        }
+
+        /* MAPA SVG RESPONSIVO SIN DEFORMACIÓN */
+        .map-wrapper {
+            position: relative;
+            width: 100%;
+            height: auto;
+            min-height: 240px;
+            max-height: 460px;
+            aspect-ratio: 16 / 9;
+            background: #eaf3ed;
+            border-radius: var(--radius-btn);
+            overflow: hidden;
+            border: 2px solid var(--border-soft);
+            touch-action: pan-x pan-y;
+        }
+
+        #map-svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .map-overlay {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+            flex-wrap: wrap;
+        }
+
+        .map-info-pill {
+            pointer-events: auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(6px);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--border-soft);
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-title);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        /* */
+        /* DIAGRAMA DE RUTA INTERACTIVO */
+        .route-diagram-box {
+            overflow-x: auto;
+            padding: 0.5rem 0;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            width: 100%;
+        }
+        
+        .route-diagram-box::-webkit-scrollbar {
+            display: none;
+        }
+
+        .timeline-container {
+            display: flex;
+            align-items: center;
+            min-width: 600px;
+            position: relative;
+            padding: 20px 10px;
+        }
+
+        .timeline-track {
+            position: absolute;
+            top: 50%;
+            left: 30px;
+            right: 30px;
+            height: 8px;
+            background: #cbd5e1;
+            transform: translateY(-50%);
+            border-radius: 4px;
+            z-index: 1;
+        }
+
+        .timeline-progress {
+            position: absolute;
+            top: 50%;
+            left: 30px;
+            width: 0%;
+            height: 8px;
+            background: var(--chia-green-main);
+            transform: translateY(-50%);
+            border-radius: 4px;
+            z-index: 2;
+            transition: width 0.4s ease;
+        }
+
+        .timeline-stop {
+            position: relative;
+            z-index: 3;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 0;
+        }
+
+        .stop-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 4px solid #94a3b8;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-stop.reached .stop-dot {
+            border-color: var(--chia-green-main);
+            background: #ffffff;
+        }
+
+        .timeline-stop.current .stop-dot {
+            border-color: var(--neon-blue);
+            background: var(--neon-blue);
+            box-shadow: 0 0 14px var(--neon-blue-glow);
+            animation: bounceDot 1.2s infinite alternate;
+        }
+
+        @keyframes bounceDot {
+            from { transform: translateY(0) scale(1); }
+            to { transform: translateY(-4px) scale(1.15); }
+        }
+
+        .stop-text {
+            margin-top: 8px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-align: center;
+            max-width: 85px;
+            white-space: normal;
+        }
+
+        .timeline-stop.current .stop-text {
+            color: var(--chia-green-dark);
+        }
+
+        /* GRID DE RUTAS */
+        .routes-overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 12px;
+            margin-top: 8px;
+            width: 100%;
+        }
+
+        .route-card-item {
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-soft);
+            border-radius: var(--radius-btn);
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .route-card-item:hover, .route-card-item.active {
+            border-color: var(--chia-green-main);
+            background: var(--chia-green-light);
+        }
+
+        .route-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .route-card-title {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: var(--chia-green-dark);
+        }
+
+        .route-badge {
+            font-size: 0.68rem;
+            font-weight: 800;
+            background: var(--chia-green-main);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .route-card-desc {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.25;
+        }
+
+        /* COMUNIDAD Y REPORTES */
+        .community-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .quick-report-bar {
+            background: var(--chia-green-light);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-btn);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .quick-report-title {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--chia-green-dark);
+        }
+
+        .chips-container {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .chip-btn {
+            background: #ffffff;
+            border: 1.5px solid var(--border-soft);
+            padding: 8px 14px;
+            min-height: 42px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-title);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            touch-action: manipulation;
+        }
+
+        .chip-btn.active {
+            background: var(--chia-green-main);
+            color: white;
+            border-color: var(--chia-green-main);
+            box-shadow: 0 0 10px var(--neon-green-glow);
+        }
+
+        .community-feed {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 10px;
+            max-height: 320px;
+            overflow-y: auto;
+            padding-right: 2px;
+        }
+
+        .report-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-soft);
+            border-left: 5px solid var(--chia-green-main);
+            border-radius: var(--radius-btn);
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .report-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .report-location {
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: var(--chia-green-dark);
+        }
+
+        .report-tag {
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+        }
+
+        .tag-good { background: #dcfce7; color: #15803d; }
+        .tag-busy { background: #fef3c7; color: #b45309; }
+        .tag-alert { background: #fee2e2; color: #b91c1c; }
+
+        .report-msg {
+            font-size: 0.8rem;
+            color: var(--text-body);
+            line-height: 1.3;
+        }
+
+        .report-time {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            align-self: flex-end;
+        }
+
+        /* DIRECTORIO Y BUSCADOR */
+        .directory-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 480px;
+            overflow-y: auto;
+        }
+
+        .paradero-card {
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-soft);
+            border-radius: var(--radius-btn);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .paradero-card.active {
+            border-color: var(--chia-green-main);
+            background: var(--chia-green-light);
+        }
+
+        .paradero-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .paradero-name {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--chia-green-dark);
+        }
+
+        .zone-pill {
+            font-size: 0.68rem;
+            font-weight: 700;
+            background: #ffffff;
+            border: 1px solid var(--border-soft);
+            padding: 2px 6px;
+            border-radius: 6px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .routes-badge {
+            font-size: 0.68rem;
+            font-weight: 700;
+            background: #ffffff;
+            border: 1px solid var(--border-soft);
+            padding: 2px 8px;
+            border-radius: 8px;
+            color: var(--text-title);
+        }
+
+        .amenities-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .amenity-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .amenity-item.has {
+            color: var(--chia-green-dark);
+        }
+
+        /* BUSES EN VIVO Y ELEMENTOS DE SELECCIÓN */
+        .bus-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-btn);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .bus-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bus-name {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: var(--chia-green-dark);
+        }
+
+        .occ-pill {
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 4px 8px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .occ-empty { background: #dcfce7; color: #15803d; border: 1px solid var(--neon-green); }
+
+        .bus-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            background: var(--bg-subtle);
+            padding: 8px 10px;
+            border-radius: 8px;
+        }
+
+        .info-cell-label {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .info-cell-value {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--text-title);
+        }
+
+        .search-field {
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .search-field input {
+            width: 100%;
+            height: 44px;
+            padding: 0 12px 0 38px;
+            border: 1.5px solid var(--border-soft);
+            border-radius: var(--radius-btn);
+            font-size: 0.85rem;
+            outline: none;
+            background: #ffffff;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .zone-filters-bar {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            margin-bottom: 10px;
+            padding-bottom: 4px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .filter-btn {
+            background: #ffffff;
+            border: 1px solid var(--border-soft);
+            padding: 6px 12px;
+            min-height: 36px;
+            border-radius: 14px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .filter-btn.active {
+            background: var(--chia-green-main);
+            color: white;
+            border-color: var(--chia-green-main);
+        }
+
+        #route-selector {
+            width: 100%;
+            height: 46px;
+            padding: 0 10px;
+            border-radius: var(--radius-btn);
+            border: 1.5px solid var(--border-soft);
+            font-weight: 700;
+            color: var(--text-title);
+            background: #ffffff;
+            outline: none;
+            font-size: 0.88rem;
+        }
+
+        /* BARRA DE NAVEGACIÓN INFERIOR FIX */
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: var(--bottom-nav-height);
+            background: var(--bg-card);
+            border-top: 1.5px solid var(--border-soft);
+            z-index: 1000;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-decoration: none;
+            width: 25%;
+            height: 100%;
+            gap: 4px;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .nav-item.active {
+            color: var(--chia-green-main);
+        }
+
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-soft);
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+
+        .svg-icon {
+            display: inline-block;
+            vertical-align: middle;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* */
+        /* ==========================================================================
+           2. REGLAS RESPONSIVAS PARA ESCRITORIO, TABLETS Y MÓVILES
+           ========================================================================== */
+
+        /* PANTALLAS GRANDES Y TABLETS HORIZONTALES (> 900px) */
+        @media (min-width: 901px) {
+            main {
+                display: grid;
+                grid-template-columns: 1fr 380px;
+                gap: 1rem;
+            }
+
+            .tab-content {
+                display: flex !important;
+            }
+
+            .bottom-nav {
+                display: none !important;
+            }
+
+            body {
+                padding-bottom: 0;
+            }
+        }
+
+        /* TABLETS EN PORTRAIT Y MÓVILES (<= 900px) */
+        @media (max-width: 900px) {
+            body {
+                padding-bottom: var(--bottom-nav-height);
+            }
+
+            main {
+                display: flex;
+                flex-direction: column;
+                padding: 0.75rem;
+            }
+
+            /* Sistema de pestañas exclusivo para pantallas pequeñas/medianas */
+            .tab-content {
+                display: none;
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+
+            .tab-content.active {
+                display: flex !important;
+            }
+
+            .bottom-nav {
+                display: flex;
+            }
+
+            .map-wrapper {
+                aspect-ratio: 4 / 3;
+                max-height: 320px;
+            }
+
+            .directory-grid {
+                max-height: calc(100vh - 280px);
+            }
+        }
+
+        /* AJUSTES MÓVILES PEQUEÑOS (<= 600px) */
+        @media (max-width: 600px) {
+            header {
+                padding: 0.6rem 0.8rem;
+            }
+
+            .brand-title p {
+                display: none;
+            }
+
+            .brand-title h1 {
+                font-size: 1.05rem;
+            }
+
+            .map-wrapper {
+                aspect-ratio: 1 / 1;
+                max-height: 280px;
+            }
+
+            .live-badge span {
+                font-size: 0.72rem;
+            }
+
+            .routes-overview-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- -->
+    <header>
+        <div class="brand">
+            <div class="brand-icon">
+                <svg class="svg-icon" width="22" height="22" viewBox="0 0 24 24" stroke="var(--chia-green-main)">
+                    <rect x="3" y="4" width="18" height="15" rx="3"></rect>
+                    <line x1="3" y1="11" x2="21" y2="11"></line>
+                    <circle cx="7.5" cy="15.5" r="1.5" fill="currentColor"></circle>
+                    <circle cx="16.5" cy="15.5" r="1.5" fill="currentColor"></circle>
+                </svg>
+            </div>
+            <div class="brand-title">
+                <h1>RutaChía</h1>
+                <p>Tu transporte público fácil, claro y en vivo</p>
+            </div>
+        </div>
+
+        <div class="live-badge">
+            <div class="pulse-dot"></div>
+            <span>Buses en Servicio</span>
+        </div>
+    </header>
+
+    <main>
+        <!-- COLUMNA IZQUIERDA: MAPA + DIAGRAMA DE RUTA + COMUNIDAD -->
+        <div class="col-main tab-content active" id="tab-mapa">
+            
+            <!-- TARJETA SELECTOR DE RUTA -->
+            <div class="card">
+                <div class="card-header" style="margin-bottom: 0.2rem; padding-bottom: 0.2rem;">
+                    <div class="card-title" style="font-size: 0.92rem;">
+                        <svg class="svg-icon" width="18" height="18" viewBox="0 0 24 24" stroke="var(--chia-green-main)">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                        <span>Elige tu Ruta Municipal</span>
+                    </div>
+                </div>
+                <select id="route-selector">
+                    <!-- Opciones cargadas dinámicamente por JS -->
+                </select>
+            </div>
+
+            <!-- TARJETA MAPA EN VIVO DE CHÍA -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">
+                            <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" stroke="var(--chia-green-main)">
+                                <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+                                <line x1="8" y1="2" x2="8" y2="18"></line>
+                                <line x1="16" y1="6" x2="16" y2="22"></line>
+                            </svg>
+                            <span>Mapa en Vivo</span>
+                        </div>
+                        <p class="card-subtitle">Ubicación y recorrido interactivo por Chía</p>
+                    </div>
+                    <span id="active-route-label" style="font-size: 0.75rem; font-weight: 800; color: var(--chia-green-dark); background: var(--chia-green-light); padding: 4px 8px; border-radius: 12px;">Ruta Cargando...</span>
+                </div>
+
+                <div class="map-wrapper">
+                    <!-- MAPA VECTORIAL SVG RESPONSIVO CON VIEWBOX Y PRESERVEASPECTRATIO -->
+                    <svg id="map-svg" viewBox="0 0 800 420" preserveAspectRatio="xMidYMid meet">
+                        <!-- Silueta geográfica de Chía -->
+                        <path d="M 40,30 L 200,10 L 550,20 L 760,80 L 770,380 L 560,410 L 260,410 L 20,280 Z" 
+                              fill="#f1f7f3" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="6,4"/>
+
+                        <!-- Río Bogotá -->
+                        <path d="M 620,10 Q 560,160 600,260 T 640,410" fill="none" stroke="#93c5fd" stroke-width="14" opacity="0.5"/>
+                        <text x="635" y="100" fill="#3b82f6" font-size="11" font-weight="bold" opacity="0.7">Río Bogotá</text>
+
+                        <!-- Cerro La Valvanera -->
+                        <path d="M 70,140 Q 130,80 190,150 Q 240,110 300,160 Z" fill="#dcfce7" opacity="0.8"/>
+                        <text x="120" y="125" fill="#15803d" font-size="11" font-weight="bold">Cerro Valvanera</text>
+
+                        <!-- TRAZADO DINÁMICO DE LA RUTA SELECCIONADA -->
+                        <path id="svg-route-path" d="" fill="none" stroke="var(--chia-green-main)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+                        <!-- GRUPO PARA PARADEROS DINÁMICOS EN MAPA -->
+                        <g id="map-stops-group"></g>
+
+                        <!-- MARCADOR DE BUS GPS EN VIVO -->
+                        <g id="bus-gps-marker" transform="translate(-100, -100)">
+                            <circle r="20" fill="none" stroke="var(--neon-green)" stroke-width="3" opacity="0.8">
+                                <animate attributeName="r" values="14;24;14" dur="2s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0.9;0.1;0.9" dur="2s" repeatCount="indefinite"/>
+                            </circle>
+                            <rect x="-16" y="-11" width="32" height="22" rx="5" fill="var(--chia-green-dark)" stroke="white" stroke-width="2.5"/>
+                            <rect x="-11" y="-7" width="22" height="8" rx="2" fill="#a7f3d0"/>
+                            <circle cx="11" cy="7" r="2.5" fill="var(--neon-green)"/>
+                        </g>
+                    </svg>
+
+                    <div class="map-overlay">
+                        <div class="map-info-pill">
+                            Próxima llegada: <span id="gps-eta-text" style="color: var(--chia-green-dark);">En 3 min</span>
+                        </div>
+                        <button class="btn-neon" id="btn-recenter-map" style="padding: 6px 12px; min-height: 36px; font-size: 0.78rem;">
+                            <svg class="svg-icon" width="14" height="14" viewBox="0 0 24 24" stroke="currentColor">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="2" x2="12" y2="6"></line>
+                                <line x1="12" y1="18" x2="12" y2="22"></line>
+                                <line x1="2" y1="12" x2="6" y2="12"></line>
+                                <line x1="18" y1="12" x2="22" y2="12"></line>
+                            </svg>
+                            Ubicación
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TARJETA DIAGRAMA DE LÍNEA DE TRANSPORTE -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">
+                            <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" stroke="var(--chia-green-main)">
+                                <circle cx="6" cy="12" r="3"></circle>
+                                <circle cx="18" cy="12" r="3"></circle>
+                                <line x1="9" y1="12" x2="15" y2="12"></line>
+                            </svg>
+                            <span>Línea de la Ruta Activa</span>
+                        </div>
+                        <p class="card-subtitle">Toca un paradero para simular selección</p>
+                    </div>
+                </div>
+
+                <div class="route-diagram-box">
+                    <div class="timeline-container" id="timeline-container">
+                        <div class="timeline-track"></div>
+                        <div class="timeline-progress" id="diagram-bar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTADO DEL BUS EN VIVO -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">
+                            <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" stroke="var(--chia-green-main)">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <span>Buses en Camino</span>
+                        </div>
+                        <p class="card-subtitle">Ocupación y tiempo estimado</p>
+                    </div>
+                </div>
+
+                <div class="bus-card">
+                    <div class="bus-card-top">
+                        <span class="bus-name" id="active-bus-code">Bus #CH-104</span>
+                        <span class="occ-pill occ-empty">
+                            <svg class="svg-icon" width="12" height="12" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle></svg>
+                            Ocupación Normal (35%)
+                        </span>
+                    </div>
+                    <div class="bus-info-grid">
+                        <div class="info-cell">
+                            <span class="info-cell-label">Siguiente Paradero</span>
+                            <span class="info-cell-value" id="bus-next-stop-name">Cargando...</span>
+                        </div>
+                        <div class="info-cell">
+                            <span class="info-cell-label">Tiempo de espera</span>
+                            <span class="info-cell-value" id="bus-eta-val" style="color: var(--chia-green-dark);">Llega en 3 min</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SECCIÓN DE TODAS LAS RUTAS DE CHÍA -->
+        <div class="col-main tab-content" id="tab-rutas">
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">
+                            <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" stroke="var(--chia-green-main)">
+                                <polyline points="16 3 21 3 21 8"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                                <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path>
+                            </svg>
+                            <span>Red Completa de Rutas Municipales</span>
+                        </div>
+                        <p class="card-subtitle">Explora los recorridos y cobertura en Chía</p>
+                    </div>
+                </div>
+
+                <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 8px;">
+                    Selecciona cualquier ruta para visualizar su mapa dinámico y sus paraderos asociados:
+                </p>
+
+                <div class="routes-overview-grid" id="routes-overview-container">
+                    <!-- Generado por JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- PESTAÑA DE COMUNIDAD -->
+        <div class="col-main tab-content" id="tab-comunidad">
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">
+                            <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" stroke="var(--chia-green-main)">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                            <span>Comunidad RutaChía</span>
+                        </div>
+                        <p class="card-subtitle">Reportes en tiempo real de usuarios en Chía</p>
+                    </div>
+                </div>
+
+                <div class="community-box">
+                    <div class="quick-report-bar">
+                        <span class="quick-report-title">Reporta el estado de tu paradero:</span>
+                        <div class="chips-container">
+                            <button class="chip-btn" data-type="good">
+                                <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" stroke="#16a34a"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                Todo normal
+                            </button>
+                            <button class="chip-btn" data-type="busy">
+                                <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" stroke="#d97706"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                                Muy lleno
+                            </button>
+                            <button class="chip-btn" data-type="alert">
+                                <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" stroke="#dc2626"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                Tarda el bus
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="community-feed" id="community-feed">
+                        <!-- Generado por JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COLUMNA DERECHA / DIRECTORIO DE PARADEROS -->
+        <div class="col-side tab-content" id="tab-directorio">
+            <div class="card" style="flex: 1;">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">
+                            <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" stroke="var(--chia-green-main)">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            <span>Directorio de Paraderos</span>
+                        </div>
+                        <p class="card-subtitle"><span id="stops-count">0</span> paraderos en el municipio</p>
+                    </div>
+                </div>
+
+                <div class="search-field">
+                    <svg class="search-icon svg-icon" width="18" height="18" viewBox="0 0 24 24" stroke="var(--text-muted)">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="directory-search" placeholder="Buscar por nombre o sector (ej. Sabana, Mercedes)...">
+                </div>
+
+                <!-- FILTROS POR ZONA -->
+                <div class="zone-filters-bar" id="zone-filters-container">
+                    <!-- Generados por JS -->
+                </div>
+
+                <div class="directory-grid" id="directory-container">
+                    <!-- Generado por JS -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- BARRA DE NAVEGACIÓN INFERIOR PARA PANTALLAS PEQUEÑAS / TABLETS -->
+    <nav class="bottom-nav">
+        <div class="nav-item active" onclick="switchTab('tab-mapa', this)">
+            <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg>
+            <span>Mapa</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('tab-rutas', this)">
+            <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            <span>Rutas</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('tab-comunidad', this)">
+            <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+            <span>Comunidad</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('tab-directorio', this)">
+            <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span>Paraderos</span>
+        </div>
+    </nav>
+
+    <footer>
+        <p>RutaChía • Movilidad Fácil para Todos en Chía, Cundinamarca</p>
+    </footer>
+
+    <!-- -->
+    <script>
+        const PARADEROS_CHIA = [
+            { id: 1, name: "Parque Principal / La Libertad", zone: "Centro Histórico", roof: true, bench: true, light: true, routes: ["Ruta 1", "Ruta 2", "Ruta 4"], coords: { x: 180, y: 260 } },
+            { id: 2, name: "Mercedes de Calahorra", zone: "Norte Urbano", roof: true, bench: false, light: true, routes: ["Ruta 1", "Ruta 2"], coords: { x: 300, y: 230 } },
+            { id: 3, name: "Centro Comercial Centro Chía", zone: "Zona Comercial", roof: true, bench: true, light: true, routes: ["Ruta 1", "Ruta 2", "Ruta 4"], coords: { x: 420, y: 210 } },
+            { id: 4, name: "C.C. Fontanar / Vía Cajicá", zone: "Zona Comercial", roof: true, bench: true, light: true, routes: ["Ruta 1", "Ruta 4"], coords: { x: 520, y: 240 } },
+            { id: 5, name: "U. de La Sabana / Pte Común", zone: "Zona Educativa", roof: true, bench: true, light: true, routes: ["Ruta 1", "Ruta 2"], coords: { x: 600, y: 180 } },
+            { id: 6, name: "Vereda Cají / Anillo Veredal", zone: "Vereda Cají", roof: false, bench: false, light: true, routes: ["Ruta 3"], coords: { x: 250, y: 340 } },
+            { id: 7, name: "Vereda Fonquetá / Capilla", zone: "Vereda Fonquetá", roof: true, bench: true, light: false, routes: ["Ruta 3"], coords: { x: 120, y: 200 } },
+            { id: 8, name: "Variante Chía - Cota / Terpel", zone: "Variante", roof: true, bench: false, light: true, routes: ["Ruta 4"], coords: { x: 220, y: 320 } },
+            { id: 9, name: "Vereda Bojacá / Sector El Humero", zone: "Vereda Bojacá", roof: true, bench: true, light: true, routes: ["Ruta 4"], coords: { x: 480, y: 330 } },
+            { id: 10, name: "Vereda Fagua / Colegio Veredal", zone: "Vereda Fagua", roof: false, bench: true, light: true, routes: ["Ruta 5"], coords: { x: 130, y: 120 } },
+            { id: 11, name: "Vereda Tiquiza / Cuatro Esquinas", zone: "Vereda Tiquiza", roof: true, bench: false, light: false, routes: ["Ruta 5"], coords: { x: 280, y: 110 } },
+            { id: 12, name: "Barrio Samaria / Cancha Sintética", zone: "Sur Urbano", roof: true, bench: true, light: true, routes: ["Ruta 6"], coords: { x: 380, y: 360 } },
+            { id: 13, name: "SENA Sede Chía / El Cedro", zone: "Zona Educativa", roof: true, bench: true, light: true, routes: ["Ruta 6"], coords: { x: 560, y: 310 } },
+            { id: 14, name: "Portal Norte Connexion / AutoNorte", zone: "Intermunicipal", roof: true, bench: true, light: true, routes: ["Ruta 2"], coords: { x: 710, y: 130 } },
+            { id: 15, name: "Coliseo de Chía / La Luna", zone: "Centro Histórico", roof: true, bench: true, light: true, routes: ["Ruta 1", "Ruta 3", "Ruta 6"], coords: { x: 220, y: 240 } },
+            { id: 16, name: "Terminal de Transportes Chía", zone: "Centro Histórico", roof: true, bench: true, light: true, routes: ["Ruta 1", "Ruta 2", "Ruta 3", "Ruta 4", "Ruta 5", "Ruta 6"], coords: { x: 200, y: 280 } },
+            { id: 17, name: "Avenida Pradilla / McDonalds", zone: "Zona Comercial", roof: true, bench: true, light: true, routes: ["Ruta 1", "Ruta 2", "Ruta 4"], coords: { x: 340, y: 260 } },
+            { id: 18, name: "Clinica Marly Jorge Cavelier", zone: "Zona Educativa", roof: true, bench: true, light: true, routes: ["Ruta 1", "Ruta 2"], coords: { x: 550, y: 200 } },
+            { id: 19, name: "Vereda La Caro / Estación Tren", zone: "Intermunicipal", roof: false, bench: true, light: true, routes: ["Ruta 2"], coords: { x: 670, y: 160 } },
+            { id: 20, name: "Vereda Yerbabuena / Castillo", zone: "Veredas Este", roof: false, bench: false, light: false, routes: ["Ruta 2"], coords: { x: 720, y: 80 } },
+            { id: 21, name: "Barrio Riofrío / Parque Infantil", zone: "Norte Urbano", roof: true, bench: true, light: true, routes: ["Ruta 5"], coords: { x: 220, y: 170 } },
+            { id: 22, name: "Valvanera / Entrada Escaleras", zone: "Vereda Fonquetá", roof: false, bench: false, light: true, routes: ["Ruta 3"], coords: { x: 90, y: 160 } },
+            { id: 23, name: "Vereda Cají / Sector El Triángulo", zone: "Vereda Cají", roof: true, bench: false, light: true, routes: ["Ruta 3"], coords: { x: 310, y: 350 } },
+            { id: 24, name: "Anillo Vial Bojacá / Sector Granjas", zone: "Vereda Bojacá", roof: false, bench: true, light: true, routes: ["Ruta 4"], coords: { x: 420, y: 320 } },
+            { id: 25, name: "Barrio Delicias / Cra 9", zone: "Centro Histórico", roof: true, bench: true, light: true, routes: ["Ruta 6"], coords: { x: 160, y: 300 } },
+            { id: 26, name: "Barrio Campincito / Salón Comunal", zone: "Sur Urbano", roof: true, bench: false, light: true, routes: ["Ruta 6"], coords: { x: 300, y: 310 } },
+            { id: 27, name: "Colegio Diversificado / Conalped", zone: "Zona Educativa", roof: true, bench: true, light: true, routes: ["Ruta 5", "Ruta 6"], coords: { x: 260, y: 210 } },
+            { id: 28, name: "Universidad Cundinamarca Chía", zone: "Zona Educativa", roof: true, bench: true, light: true, routes: ["Ruta 1", "Ruta 4"], coords: { x: 440, y: 280 } }
+        ];
+
+        const RUTAS_SISTEMA = [
+            {
+                id: "r1",
+                name: "Ruta 1: Centro - Mercedes - U. Sabana",
+                code: "R1-URB",
+                busCode: "Bus #CH-104",
+                desc: "Conecta el Parque Principal con la zona comercial y universitaria por Av. Pradilla.",
+                stopIds: [16, 1, 15, 2, 17, 3, 28, 4, 18, 5]
+            },
+            {
+                id: "r2",
+                name: "Ruta 2: Chía Directo - Portal Norte / La Caro",
+                code: "R2-EXP",
+                busCode: "Bus #CH-208",
+                desc: "Ruta rápida hacia Portal Norte pasando por La Caro y Yerbabuena.",
+                stopIds: [16, 1, 17, 3, 5, 18, 19, 20, 14]
+            },
+            {
+                id: "r3",
+                name: "Ruta 3: Vereda Fonquetá - Valvanera - Cají",
+                code: "R3-VER",
+                busCode: "Bus #CH-312",
+                desc: "Recorrido veredal hacia los cerros occidentales y el anillo de Cají.",
+                stopIds: [22, 7, 15, 16, 1, 6, 23]
+            },
+            {
+                id: "r4",
+                name: "Ruta 4: Variante - Bojacá - C.C. Fontanar",
+                code: "R4-VAR",
+                busCode: "Bus #CH-405",
+                desc: "Cobertura del corredor vial sur y acceso al sector veredal de Bojacá.",
+                stopIds: [16, 1, 8, 25, 24, 9, 28, 3, 4]
+            },
+            {
+                id: "r5",
+                name: "Ruta 5: Fagua - Tiquiza - Riofrío",
+                code: "R5-VER",
+                busCode: "Bus #CH-519",
+                desc: "Conecta las veredas del norte de Chía con centros educativos e históricos.",
+                stopIds: [10, 11, 21, 27, 15, 16]
+            },
+            {
+                id: "r6",
+                name: "Ruta 6: Samaria - Delicias - SENA",
+                code: "R6-SUR",
+                busCode: "Bus #CH-602",
+                desc: "Ruta sur que comunica barrios residenciales con la sede del SENA Chía.",
+                stopIds: [25, 16, 26, 12, 13]
+            }
+        ];
+
+        let reportesComunidad = [
+            { id: 101, paradero: "Parque Principal / La Libertad", tipo: "good", tag: "Todo Normal", texto: "El bus de la Ruta 1 pasó a tiempo. Flujo moderado.", tiempo: "Hace 4 min" },
+            { id: 102, paradero: "U. de La Sabana / Pte Común", tipo: "busy", tag: "Muy Lleno", texto: "Gran afluencia de estudiantes en horario pico.", tiempo: "Hace 12 min" },
+            { id: 103, paradero: "Mercedes de Calahorra", tipo: "alert", tag: "Tarda el bus", texto: "Tráfico lento en Av. Pradilla por obras menores.", tiempo: "Hace 22 min" }
+        ];
+
+        let estadoApp = {
+            activeRouteId: "r1",
+            selectedStopId: 1,
+            busProgress: 0,
+            busSegment: 0,
+            speed: 0.005
+        };
+
+        const routeSelector = document.getElementById('route-selector');
+        const activeRouteLabel = document.getElementById('active-route-label');
+        const activeBusCode = document.getElementById('active-bus-code');
+        const directoryContainer = document.getElementById('directory-container');
+        const zoneFiltersContainer = document.getElementById('zone-filters-container');
+        const communityFeed = document.getElementById('community-feed');
+        const searchInput = document.getElementById('directory-search');
+        const stopsCountEl = document.getElementById('stops-count');
+        const routesOverviewContainer = document.getElementById('routes-overview-container');
+        
+        const mapSvgPath = document.getElementById('svg-route-path');
+        const mapStopsGroup = document.getElementById('map-stops-group');
+        const busMarker = document.getElementById('bus-gps-marker');
+        const busEtaVal = document.getElementById('bus-eta-val');
+        const busNextStopName = document.getElementById('bus-next-stop-name');
+        const gpsEtaText = document.getElementById('gps-eta-text');
+        const timelineContainer = document.getElementById('timeline-container');
+        const btnRecenter = document.getElementById('btn-recenter-map');
+
+        let activeFilterZone = "TODAS";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initRouteSelector();
+            renderRoutesOverview();
+            renderZoneFilters();
+            renderDirectory();
+            renderCommunityFeed();
+            loadRoute(estadoApp.activeRouteId);
+            setupEvents();
+            animateBusGPS();
+        });
+
+        function initRouteSelector() {
+            routeSelector.innerHTML = '';
+            RUTAS_SISTEMA.forEach(r => {
+                const opt = document.createElement('option');
+                opt.value = r.id;
+                opt.innerText = r.name;
+                routeSelector.appendChild(opt);
+            });
+        }
+
+        /* CAMBIO DE PESTAÑAS LIMPIO Y RESPONSIVO */
+        function switchTab(tabId, element) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            
+            const target = document.getElementById(tabId);
+            if (target) target.classList.add('active');
+            if (element) element.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function loadRoute(routeId) {
+            estadoApp.activeRouteId = routeId;
+            estadoApp.busProgress = 0;
+            estadoApp.busSegment = 0;
+
+            const routeObj = RUTAS_SISTEMA.find(r => r.id === routeId);
+            if (!routeObj) return;
+
+            activeRouteLabel.innerText = routeObj.name;
+            activeBusCode.innerText = routeObj.busCode;
+            routeSelector.value = routeId;
+
+            const routeStops = routeObj.stopIds.map(id => PARADEROS_CHIA.find(p => p.id === id)).filter(Boolean);
+
+            let dPath = "";
+            routeStops.forEach((st, idx) => {
+                dPath += (idx === 0 ? `M ${st.coords.x},${st.coords.y}` : ` L ${st.coords.x},${st.coords.y}`);
+            });
+            mapSvgPath.setAttribute('d', dPath);
+
+            mapStopsGroup.innerHTML = '';
+            routeStops.forEach((st, idx) => {
+                const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                g.setAttribute('transform', `translate(${st.coords.x}, ${st.coords.y})`);
+                g.style.cursor = 'pointer';
+                g.onclick = () => selectStop(st.id);
+
+                g.innerHTML = `
+                    <circle r="9" fill="white" stroke="var(--chia-green-dark)" stroke-width="2.5"/>
+                    <circle r="4" fill="var(--chia-green-dark)"/>
+                    <text x="-20" y="-12" font-size="10" font-weight="800" fill="var(--text-title)">${idx + 1}. ${st.name.split('/')[0]}</text>
+                `;
+                mapStopsGroup.appendChild(g);
+            });
+
+            renderTimelineDiagram(routeStops);
+
+            if (routeStops.length > 0) {
+                selectStop(routeStops[0].id);
+            }
+
+            document.querySelectorAll('.route-card-item').forEach(c => {
+                c.classList.toggle('active', c.getAttribute('data-id') === routeId);
+            });
+        }
+
+        function renderTimelineDiagram(stops) {
+            timelineContainer.innerHTML = `
+                <div class="timeline-track"></div>
+                <div class="timeline-progress" id="diagram-bar"></div>
+            `;
+
+            stops.forEach((st, idx) => {
+                const node = document.createElement('div');
+                node.className = `timeline-stop ${idx === 0 ? 'reached current' : ''}`;
+                node.setAttribute('data-id', st.id);
+                node.onclick = () => selectStop(st.id);
+
+                node.innerHTML = `
+                    <div class="stop-dot"></div>
+                    <span class="stop-text">${st.name.split('/')[0]}</span>
+                `;
+                timelineContainer.appendChild(node);
+            });
+        }
+
+        function renderRoutesOverview() {
+            routesOverviewContainer.innerHTML = '';
+            RUTAS_SISTEMA.forEach(r => {
+                const item = document.createElement('div');
+                item.className = `route-card-item ${r.id === estadoApp.activeRouteId ? 'active' : ''}`;
+                item.setAttribute('data-id', r.id);
+
+                item.innerHTML = `
+                    <div class="route-card-header">
+                        <span class="route-card-title">${r.name}</span>
+                        <span class="route-badge">${r.code}</span>
+                    </div>
+                    <p class="route-card-desc">${r.desc}</p>
+                    <span style="font-size: 0.72rem; font-weight: 700; color: var(--chia-green-dark);">
+                        📍 ${r.stopIds.length} paraderos clave
+                    </span>
+                `;
+
+                item.onclick = () => {
+                    loadRoute(r.id);
+                    switchTab('tab-mapa', document.querySelectorAll('.nav-item')[0]);
+                };
+                routesOverviewContainer.appendChild(item);
+            });
+        }
+
+        function renderZoneFilters() {
+            const zones = ["TODAS", ...new Set(PARADEROS_CHIA.map(p => p.zone))];
+            zoneFiltersContainer.innerHTML = '';
+
+            zones.forEach(z => {
+                const btn = document.createElement('button');
+                btn.className = `filter-btn ${z === activeFilterZone ? 'active' : ''}`;
+                btn.innerText = z;
+                btn.onclick = () => {
+                    activeFilterZone = z;
+                    renderZoneFilters();
+                    renderDirectory();
+                };
+                zoneFiltersContainer.appendChild(btn);
+            });
+        }
+
+        function renderDirectory() {
+            directoryContainer.innerHTML = '';
+            const query = searchInput.value.toLowerCase();
+
+            const filtered = PARADEROS_CHIA.filter(p => {
+                const matchesSearch = p.name.toLowerCase().includes(query) || p.zone.toLowerCase().includes(query);
+                const matchesZone = activeFilterZone === "TODAS" || p.zone === activeFilterZone;
+                return matchesSearch && matchesZone;
+            });
+
+            stopsCountEl.innerText = filtered.length;
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = `paradero-card ${item.id === estadoApp.selectedStopId ? 'active' : ''}`;
+                card.setAttribute('data-id', item.id);
+
+                card.innerHTML = `
+                    <div class="paradero-head">
+                        <div>
+                            <div class="paradero-name">${item.name}</div>
+                            <span class="zone-pill">📍 ${item.zone}</span>
+                        </div>
+                        <span class="routes-badge">${item.routes.join(', ')}</span>
+                    </div>
+                    <div class="amenities-row">
+                        <span class="amenity-item ${item.roof ? 'has' : ''}">
+                            <svg class="svg-icon" width="13" height="13" viewBox="0 0 24 24" stroke="currentColor"><path d="M3 21h18M3 10h18M5 10V3h14v7"></path></svg>
+                            ${item.roof ? 'Techo' : 'Sin Techo'}
+                        </span>
+                        <span class="amenity-item ${item.bench ? 'has' : ''}">
+                            <svg class="svg-icon" width="13" height="13" viewBox="0 0 24 24" stroke="currentColor"><rect x="3" y="11" width="18" height="4" rx="1"></rect><path d="M5 15v4M19 15v4"></path></svg>
+                            ${item.bench ? 'Banca' : 'Sin Banca'}
+                        </span>
+                        <span class="amenity-item ${item.light ? 'has' : ''}">
+                            <svg class="svg-icon" width="13" height="13" viewBox="0 0 24 24" stroke="currentColor"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"></path></svg>
+                            ${item.light ? 'Iluminado' : 'Sin Luz'}
+                        </span>
+                    </div>
+                `;
+
+                card.onclick = () => selectStop(item.id);
+                directoryContainer.appendChild(card);
+            });
+        }
+
+        function renderCommunityFeed() {
+            communityFeed.innerHTML = '';
+            reportesComunidad.forEach(rep => {
+                const card = document.createElement('div');
+                card.className = 'report-card';
+                if (rep.tipo === 'good') card.style.borderLeftColor = 'var(--neon-green)';
+                if (rep.tipo === 'busy') card.style.borderLeftColor = 'var(--neon-orange)';
+                if (rep.tipo === 'alert') card.style.borderLeftColor = 'var(--neon-red)';
+
+                let tagClass = rep.tipo === 'busy' ? 'tag-busy' : (rep.tipo === 'alert' ? 'tag-alert' : 'tag-good');
+
+                card.innerHTML = `
+                    <div class="report-top">
+                        <span class="report-location">${rep.paradero}</span>
+                        <span class="report-tag ${tagClass}">${rep.tag}</span>
+                    </div>
+                    <p class="report-msg">${rep.texto}</p>
+                    <span class="report-time">${rep.tiempo}</span>
+                `;
+                communityFeed.appendChild(card);
+            });
+        }
+
+        function setupEvents() {
+            routeSelector.addEventListener('change', (e) => {
+                loadRoute(e.target.value);
+            });
+
+            searchInput.addEventListener('input', () => {
+                renderDirectory();
+            });
+
+            document.querySelectorAll('.chip-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tipo = btn.getAttribute('data-type');
+                    const textLabel = btn.innerText.trim();
+                    const activeParadero = PARADEROS_CHIA.find(p => p.id === estadoApp.selectedStopId) || PARADEROS_CHIA[0];
+
+                    const nuevoReporte = {
+                        id: Date.now(),
+                        paradero: activeParadero.name,
+                        tipo: tipo,
+                        tag: textLabel,
+                        texto: `Reporte express en ${activeParadero.name}: ${textLabel}.`,
+                        tiempo: 'Justo ahora'
+                    };
+
+                    reportesComunidad.unshift(nuevoReporte);
+                    renderCommunityFeed();
+
+                    btn.classList.add('active');
+                    setTimeout(() => btn.classList.remove('active'), 1200);
+                });
+            });
+
+            btnRecenter.addEventListener('click', () => {
+                btnRecenter.style.boxShadow = '0 0 16px var(--neon-blue-glow)';
+                setTimeout(() => {
+                    btnRecenter.style.boxShadow = '0 4px 14px var(--neon-green-glow)';
+                }, 1800);
+            });
+        }
+
+        function selectStop(stopId) {
+            estadoApp.selectedStopId = stopId;
+
+            document.querySelectorAll('.paradero-card').forEach(c => {
+                c.classList.toggle('active', parseInt(c.getAttribute('data-id')) === stopId);
+            });
+
+            const routeObj = RUTAS_SISTEMA.find(r => r.id === estadoApp.activeRouteId);
+            if (!routeObj) return;
+
+            const stopIndex = routeObj.stopIds.indexOf(stopId);
+
+            document.querySelectorAll('.timeline-stop').forEach((node, idx) => {
+                node.classList.toggle('reached', idx <= stopIndex);
+                node.classList.toggle('current', idx === stopIndex);
+            });
+
+            const dBar = document.getElementById('diagram-bar');
+            if (dBar && routeObj.stopIds.length > 1) {
+                const percent = (stopIndex / (routeObj.stopIds.length - 1)) * 100;
+                dBar.style.width = `${Math.min(Math.max(percent, 4), 100)}%`;
+            }
+        }
+
+        function animateBusGPS() {
+            function loop() {
+                const routeObj = RUTAS_SISTEMA.find(r => r.id === estadoApp.activeRouteId);
+                if (!routeObj || routeObj.stopIds.length < 2) {
+                    requestAnimationFrame(loop);
+                    return;
+                }
+
+                const routeStops = routeObj.stopIds.map(id => PARADEROS_CHIA.find(p => p.id === id)).filter(Boolean);
+
+                estadoApp.busProgress += estadoApp.speed;
+
+                if (estadoApp.busProgress >= 1) {
+                    estadoApp.busProgress = 0;
+                    estadoApp.busSegment = (estadoApp.busSegment + 1) % (routeStops.length - 1);
+                }
+
+                const p1 = routeStops[estadoApp.busSegment].coords;
+                const p2 = routeStops[estadoApp.busSegment + 1].coords;
+
+                const currentX = p1.x + (p2.x - p1.x) * estadoApp.busProgress;
+                const currentY = p1.y + (p2.y - p1.y) * estadoApp.busProgress;
+
+                busMarker.setAttribute('transform', `translate(${currentX}, ${currentY})`);
+
+                const nextStopObj = routeStops[Math.min(estadoApp.busSegment + 1, routeStops.length - 1)];
+                if (nextStopObj) {
+                    busNextStopName.innerText = nextStopObj.name.split('/')[0];
+                }
+
+                const minLeft = Math.max(1, Math.ceil((1 - estadoApp.busProgress) * 5));
+                busEtaVal.innerText = `Llega en ${minLeft} min`;
+                gpsEtaText.innerText = `En ${minLeft} min`;
+
+                requestAnimationFrame(loop);
+            }
+
+            requestAnimationFrame(loop);
+        }
+    </script>
+</body>
+</html>
