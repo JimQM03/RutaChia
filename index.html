@@ -9,7 +9,7 @@
            1. SISTEMA DE DISEÑO VISUAL Y VARIABLES (TEMA ADAPTATIVO INSPIRADO EN EL LOGO)
            ========================================================================== */
         :root {
-            /* Tema Oscuro por Defecto (Inspirado en el Logo Azul Noche Profundo) */
+            /* Tema Oscuro por Defecto */
             --bg-body: #050e1a;
             --bg-card: #0d1b2a;
             --bg-subtle: #1b263b;
@@ -63,6 +63,13 @@
             --border-glow: #94a3b8;
             --shadow-card: 0 8px 30px rgba(13, 27, 42, 0.08);
             --shadow-glow: 0 0 15px rgba(2, 132, 199, 0.15);
+        }
+
+        /* EVITAR SCROLL HORIZONTAL EN TODO EL DOCUMENTO */
+        html, body {
+            max-width: 100vw;
+            overflow-x: hidden;
+            width: 100%;
         }
 
         * {
@@ -126,7 +133,7 @@
         .splash-logo-svg {
             width: 100%;
             height: 100%;
-            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+            filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.4));
         }
 
         .splash-title {
@@ -180,7 +187,7 @@
         }
 
         /* ==========================================================================
-           3. HEADER / NAVBAR CON SWITCHER DE TEMA Y LOGO
+           3. HEADER / NAVBAR PERMANENTE Y FIJO (STICKY HEADER SOLUCIONADO)
            ========================================================================== */
         header {
             background: var(--bg-card);
@@ -191,7 +198,10 @@
             align-items: center;
             position: sticky;
             top: 0;
-            z-index: 100;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1000;
             box-shadow: var(--shadow-card);
             transition: background-color 0.3s ease, border-color 0.3s ease;
         }
@@ -306,6 +316,7 @@
             display: flex;
             flex-direction: column;
             gap: 1rem;
+            min-width: 0; /* Previene desbordamientos de flex/grid */
         }
 
         /* TARJETAS CONTENEDORAS */
@@ -316,6 +327,8 @@
             padding: 1rem;
             box-shadow: var(--shadow-card);
             transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            width: 100%;
+            overflow: hidden;
         }
 
         .card-header {
@@ -411,8 +424,9 @@
             box-shadow: var(--shadow-card);
         }
 
-        /* DIAGRAMA DE RUTA INTERACTIVO CON SCROLL HORIZONTAL */
+        /* DIAGRAMA DE RUTA INTERACTIVO CON SCROLL HORIZONTAL ACOTADO */
         .route-diagram-box {
+            width: 100%;
             overflow-x: auto;
             padding: 0.5rem 0;
             -webkit-overflow-scrolling: touch;
@@ -592,6 +606,7 @@
             gap: 8px;
             overflow-x: auto;
             padding-bottom: 6px;
+            width: 100%;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
         }
@@ -682,7 +697,7 @@
             align-self: flex-end;
         }
 
-        /* DIRECTORIO DE PARADEROS Y FILTROS POR ZONA */
+        /* DIRECTORIO DE PARADEROS Y DESPLEGABLE UNIFICADO DE ZONAS */
         .directory-grid {
             display: flex;
             flex-direction: column;
@@ -846,54 +861,47 @@
             pointer-events: none;
         }
 
-        .zone-filters-bar {
-            display: flex;
-            gap: 6px;
-            overflow-x: auto;
+        /* SELECTOR OPTIMIZADO PARA ZONAS Y RUTAS */
+        .styled-select-wrapper {
+            position: relative;
+            width: 100%;
             margin-bottom: 10px;
-            padding-bottom: 6px;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
         }
 
-        .zone-filters-bar::-webkit-scrollbar {
-            display: none;
+        .styled-select-wrapper::after {
+            content: '';
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 6px solid var(--accent-cyan);
+            pointer-events: none;
         }
 
-        .filter-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border-soft);
-            padding: 8px 14px;
-            min-height: 38px;
-            border-radius: 18px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            cursor: pointer;
-            white-space: nowrap;
-            display: inline-flex;
-            align-items: center;
-            touch-action: manipulation;
-        }
-
-        .filter-btn.active {
-            background: var(--accent-cyan);
-            color: #050e1a;
-            border-color: var(--accent-cyan);
-        }
-
-        /* SELECTOR OPTIMIZADO */
-        #route-selector {
+        #zone-select, #route-selector {
             width: 100%;
             height: 48px;
-            padding: 0 10px;
+            padding: 0 32px 0 12px;
             border-radius: var(--radius-btn);
             border: 1.5px solid var(--border-soft);
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             color: var(--text-title);
             background: var(--bg-card);
             outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+            box-shadow: var(--shadow-card);
+        }
+
+        #zone-select:focus, #route-selector:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: var(--shadow-glow);
         }
 
         /* BARRA DE NAVEGACIÓN INFERIOR MÓVIL */
@@ -1005,23 +1013,20 @@
 </head>
 <body>
 
-    <!-- 1. PANTALLA DE INICIO (SPLASH SCREEN ANIMADA CON LOGO FIEL A LA IMAGEN) -->
+    <!-- 1. PANTALLA DE INICIO (SPLASH SCREEN ANIMADA CON LOGO DEL LUNA Y RUTAS) -->
     <div id="splash-screen">
         <div class="splash-logo-container">
             <svg class="splash-logo-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Trazo Exterior Creciente de la Luna -->
-                <path d="M 98,28 C 42,42 22,100 48,150 C 70,190 128,198 168,152" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
-                <!-- Trazo Interior Creciente de la Luna con Conexiones de Nodos -->
-                <path d="M 98,28 C 72,70 70,118 138,154" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
-                
-                <!-- Nodos / Paraderos en Blanco Exactos según el Logo -->
-                <circle cx="98" cy="28" r="8" fill="#ffffff"/>
-                <circle cx="78" cy="74" r="8" fill="#ffffff"/>
-                <circle cx="52" cy="122" r="8" fill="#ffffff"/>
-                <circle cx="92" cy="144" r="8" fill="#ffffff"/>
-                <circle cx="90" cy="106" r="8" fill="#ffffff"/>
-                <circle cx="138" cy="154" r="8" fill="#ffffff"/>
-                <circle cx="168" cy="152" r="8" fill="#ffffff"/>
+                <!-- Silueta de la Luna del Logo RutaChía -->
+                <path d="M 120 25 C 70 25 35 65 35 115 C 35 155 60 185 105 185 C 80 165 70 135 70 105 C 70 65 95 35 120 25 Z" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Trazado de Conexión de Paraderos/Rutas -->
+                <path d="M 105 38 Q 78 80 82 122 T 145 168" fill="none" stroke="#ffffff" stroke-width="4" stroke-dasharray="2,2"/>
+                <!-- Nodos / Paraderos del Logo con efecto neón -->
+                <circle cx="108" cy="38" r="7" fill="#ffffff"/>
+                <circle cx="82" cy="72" r="8" fill="#38bdf8"/>
+                <circle cx="78" cy="115" r="9" fill="#ffffff"/>
+                <circle cx="102" cy="148" r="7" fill="#38bdf8"/>
+                <circle cx="145" cy="168" r="8" fill="#ffffff"/>
             </svg>
         </div>
         <div class="splash-title">RUTA CHÍA</div>
@@ -1031,24 +1036,18 @@
         </div>
     </div>
 
-    <!-- 2. HEADER CON BRANDING Y SWITCHER DE TEMA -->
+    <!-- 2. HEADER CON BRANDING Y SWITCHER DE TEMA (PERMANENTE FIJO) -->
     <header>
         <div class="brand" onclick="window.scrollTo({top:0, behavior:'smooth'})">
             <div class="brand-logo-icon">
                 <svg viewBox="0 0 200 200" width="100%" height="100%" fill="none">
-                    <!-- Trazo Exterior de la Luna -->
-                    <path d="M 98,28 C 42,42 22,100 48,150 C 70,190 128,198 168,152" fill="none" stroke="var(--text-title)" stroke-width="12" stroke-linecap="round"/>
-                    <!-- Trazo Interior de la Luna -->
-                    <path d="M 98,28 C 72,70 70,118 138,154" fill="none" stroke="var(--text-title)" stroke-width="12" stroke-linecap="round"/>
-                    
-                    <!-- Paraderos/Nodos -->
-                    <circle cx="98" cy="28" r="11" fill="var(--text-title)"/>
-                    <circle cx="78" cy="74" r="11" fill="var(--text-title)"/>
-                    <circle cx="52" cy="122" r="11" fill="var(--text-title)"/>
-                    <circle cx="92" cy="144" r="11" fill="var(--text-title)"/>
-                    <circle cx="90" cy="106" r="11" fill="var(--text-title)"/>
-                    <circle cx="138" cy="154" r="11" fill="var(--text-title)"/>
-                    <circle cx="168" cy="152" r="11" fill="var(--text-title)"/>
+                    <path d="M 120 25 C 70 25 35 65 35 115 C 35 155 60 185 105 185 C 80 165 70 135 70 105 C 70 65 95 35 120 25 Z" fill="none" stroke="var(--text-title)" stroke-width="12" stroke-linecap="round"/>
+                    <path d="M 105 38 Q 78 80 82 122 T 145 168" fill="none" stroke="var(--accent-cyan)" stroke-width="8"/>
+                    <circle cx="108" cy="38" r="10" fill="var(--text-title)"/>
+                    <circle cx="82" cy="72" r="12" fill="var(--accent-cyan)"/>
+                    <circle cx="78" cy="115" r="12" fill="var(--text-title)"/>
+                    <circle cx="102" cy="148" r="10" fill="var(--accent-cyan)"/>
+                    <circle cx="145" cy="168" r="12" fill="var(--text-title)"/>
                 </svg>
             </div>
             <div class="brand-title">
@@ -1088,9 +1087,11 @@
                         <span>Elige tu Ruta Municipal</span>
                     </div>
                 </div>
-                <select id="route-selector">
-                    <!-- Carga dinámica -->
-                </select>
+                <div class="styled-select-wrapper" style="margin-bottom: 0;">
+                    <select id="route-selector">
+                        <!-- Carga dinámica -->
+                    </select>
+                </div>
             </div>
 
             <!-- TARJETA MAPA EN VIVO DE CHÍA -->
@@ -1288,7 +1289,7 @@
                                 Muy lleno
                             </button>
                             <button class="chip-btn" data-type="alert">
-                                <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" stroke="var(--accent-red)"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" stroke="var(--accent-red)"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
                                 Tarda el bus
                             </button>
                         </div>
@@ -1325,9 +1326,11 @@
                     <input type="text" id="directory-search" placeholder="Buscar por nombre o sector (ej. Sabana, Mercedes)...">
                 </div>
 
-                <!-- FILTROS POR ZONA -->
-                <div class="zone-filters-bar" id="zone-filters-container">
-                    <!-- Generados por JS -->
+                <!-- DESPLEGABLE / SELECT UNIFICADO DE ZONAS Y UBICACIONES -->
+                <div class="styled-select-wrapper">
+                    <select id="zone-select" aria-label="Filtrar por Ubicación o Zona">
+                        <!-- Opciones generadas dinámicamente -->
+                    </select>
                 </div>
 
                 <div class="directory-grid" id="directory-container">
@@ -1472,7 +1475,7 @@
         const activeRouteLabel = document.getElementById('active-route-label');
         const activeBusCode = document.getElementById('active-bus-code');
         const directoryContainer = document.getElementById('directory-container');
-        const zoneFiltersContainer = document.getElementById('zone-filters-container');
+        const zoneSelect = document.getElementById('zone-select');
         const communityFeed = document.getElementById('community-feed');
         const searchInput = document.getElementById('directory-search');
         const stopsCountEl = document.getElementById('stops-count');
@@ -1498,7 +1501,7 @@
             initThemeToggle();
             initRouteSelector();
             renderRoutesOverview();
-            renderZoneFilters();
+            initZoneSelectDropdown();
             renderDirectory();
             renderCommunityFeed();
             loadRoute(estadoApp.activeRouteId);
@@ -1651,20 +1654,20 @@
 
         let activeFilterZone = "TODAS";
 
-        function renderZoneFilters() {
+        function initZoneSelectDropdown() {
             const zones = ["TODAS", ...new Set(PARADEROS_CHIA.map(p => p.zone))];
-            zoneFiltersContainer.innerHTML = '';
+            zoneSelect.innerHTML = '';
 
             zones.forEach(z => {
-                const btn = document.createElement('button');
-                btn.className = `filter-btn ${z === activeFilterZone ? 'active' : ''}`;
-                btn.innerText = z;
-                btn.onclick = () => {
-                    activeFilterZone = z;
-                    renderZoneFilters();
-                    renderDirectory();
-                };
-                zoneFiltersContainer.appendChild(btn);
+                const option = document.createElement('option');
+                option.value = z;
+                option.innerText = z === "TODAS" ? "📍 Todas las zonas de Chía" : `📍 Sector: ${z}`;
+                zoneSelect.appendChild(option);
+            });
+
+            zoneSelect.addEventListener('change', (e) => {
+                activeFilterZone = e.target.value;
+                renderDirectory();
             });
         }
 
@@ -1679,6 +1682,15 @@
             });
 
             stopsCountEl.innerText = filtered.length;
+
+            if (filtered.length === 0) {
+                directoryContainer.innerHTML = `
+                    <div style="text-align: center; padding: 2rem 1rem; color: var(--text-muted); font-size: 0.85rem;">
+                        No se encontraron paraderos en esta zona o término de búsqueda.
+                    </div>
+                `;
+                return;
+            }
 
             filtered.forEach(item => {
                 const card = document.createElement('div');
